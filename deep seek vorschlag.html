@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rocksack-Crossen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      background-color: #0a0a0a;
+      background-image: 
+        repeating-linear-gradient(45deg, rgba(255,0,0,0.03) 0px, rgba(255,0,0,0.03) 2px, transparent 2px, transparent 8px),
+        radial-gradient(ellipse at 50% 0%, #1a1a1a 0%, #000000 70%);
+      color: #e0e0e0;
+      letter-spacing: 1.2px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animierter Hintergrund-Partikel-Look (rein CSS) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: radial-gradient(circle at 30% 40%, rgba(255,0,0,0.08) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 20%, rgba(255,0,0,0.06) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Hauptcontainer */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HEADER */
+    header {
+      position: relative;
+      text-align: center;
+      border-bottom: 4px solid #ff004c;
+      box-shadow: 0 4px 30px rgba(255, 0, 76, 0.3);
+      overflow: hidden;
+    }
+
+    header img.responsive-header {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0.9) contrast(1.1);
+      transition: filter 0.6s;
+    }
+
+    header:hover img.responsive-header {
+      filter: brightness(1) contrast(1.2);
+    }
+
+    /* Slogan-Container mit Glasmorphism */
+    .slogan-box {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 1rem 2rem;
+      display: inline-block;
+      border-left: 5px solid #ff004c;
+      border-right: 5px solid #ff004c;
+      margin: -0.5rem auto 1.5rem;
+      transform: skewX(-5deg);
+      box-shadow: 0 0 25px rgba(255,0,76,0.2);
+    }
+
+    .slogan {
+      font-size: 2rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      transform: skewX(5deg);
+      letter-spacing: 4px;
+      text-shadow: 0 0 10px rgba(255,0,76,0.8);
+      animation: glitchPulse 3s infinite;
+    }
+
+    @keyframes glitchPulse {
+      0%, 100% { text-shadow: 0 0 10px #ff004c, 0 0 20px #ff004c; }
+      50% { text-shadow: 0 0 20px #ff004c, 0 0 40px #ff004c, 2px 2px 0 #000; }
+    }
+
+    /* SECTION CARDS */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .card {
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 0, 76, 0.25);
+      border-radius: 20px;
+      padding: 2rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255,0,76,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,0,76,0.08) 0%, transparent 70%);
+      transform: rotate(10deg);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(255, 0, 76, 0.25);
+      border-color: rgba(255, 0, 76, 0.6);
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      color: #ff004c;
+      text-transform: uppercase;
+      position: relative;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      letter-spacing: 3px;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 60px;
+      background: #ff004c;
+      box-shadow: 0 0 15px #ff004c;
+      transition: width 0.4s ease;
+    }
+
+    .card:hover h2::after {
+      width: 100%;
+    }
+
+    p {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 1.1rem;
+      color: #cccccc;
+      letter-spacing: 0.5px;
+    }
+
+    /* Setlist - Tags im Rock-Look */
+    .setlist-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .band-tag {
+      background: rgba(255, 0, 76, 0.1);
+      border: 1px solid #ff004c;
+      color: #ffffff;
+      padding: 0.6rem 1.4rem;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transform: skewX(-10deg);
+      transition: all 0.2s;
+      backdrop-filter: blur(5px);
+      display: inline-block;
+    }
+
+    .band-tag span {
+      display: inline-block;
+      transform: skewX(10deg);
+    }
+
+    .band-tag:hover {
+      background: #ff004c;
+      color: #000;
+      box-shadow: 0 0 20px #ff004c;
+      transform: skewX(-10deg) scale(1.05);
+      cursor: default;
+    }
+
+    /* Kontakt Bereich hervorheben */
+    .kontakt-highlight {
+      background: rgba(255,0,76,0.1);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      border-left: 4px solid #ff004c;
+      color: #ffffff;
+    }
+
+    .kontakt-highlight a {
+      color: #ff004c;
+      text-decoration: none;
+      border-bottom: 1px dotted #ff004c;
+    }
+
+    /* BUTTON */
+    .btn {
+      position: relative;
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #000;
+      background: linear-gradient(135deg, #ff004c, #b3003a);
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(255, 0, 76, 0.5);
+      overflow: hidden;
+      transition: all 0.4s;
+      z-index: 1;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(255, 0, 76, 0.8);
+      color: #fff;
+      background: linear-gradient(135deg, #b3003a, #ff004c);
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.2);
+      transform: rotate(30deg);
+      transition: all 0.7s;
+    }
+
+    .btn:hover::after {
+      left: 100%;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      border-top: 2px solid #ff004c;
+      font-size: 1rem;
+      color: #888;
+      letter-spacing: 2px;
+      background: #050505;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer span {
+      color: #ff004c;
+    }
+
+    /* Responsive Anpassungen */
+    @media (max-width: 700px) {
+      .slogan {
+        font-size: 1.4rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <img src="header.gif" class="responsive-header" alt="Rocksack Header" />
+      <div class="slogan-box">
+        <p class="slogan">Handgemachte Rockmusik aus Crossen seit 1980</p>
+      </div>
+    </header>
+
+    <section>
+      <!-- Info Card -->
+      <div class="card">
+        <h2>Rocksack aus dem schönen Crossen an der Elster</h2>
+        <p>ROCKSACK ist seit 45 Jahren on the road... niemals leise, angepasst oder normal. Die Musik immer laut und rockig, immer handgemacht und meist bissiger als das Original! Eine Show, die nach vorne geht und keine Langeweile zulässt. ROCKSACK das sind 2 bis 3 1/2 Stunden Musik für Euch. Aus der Mitte Deutschlands sind wir fast überall schnell verfügbar.</p>
+      </div>
+
+      <!-- Setlist Card -->
+      <div class="card">
+        <h2>Setlist? Nein Danke, hier gibt es einen Strauss bunter Melodien!</h2>
+        <div class="setlist-container">
+          <div class="band-tag"><span>Motörhead</span></div>
+          <div class="band-tag"><span>Metallica</span></div>
+          <div class="band-tag"><span>Propain</span></div>
+          <div class="band-tag"><span>Rage Against The Machine</span></div>
+          <div class="band-tag"><span>Böhse Onkelz</span></div>
+          <div class="band-tag"><span>AC/DC</span></div>
+          <div class="band-tag"><span>Johnny Cash</span></div>
+          <div class="band-tag"><span>Billy Idol</span></div>
+          <div class="band-tag"><span>CCR</span></div>
+          <div class="band-tag"><span>Black Sabbath</span></div>
+          <div class="band-tag"><span>Judas Priest</span></div>
+          <div class="band-tag"><span>Neil Young</span></div>
+          <div class="band-tag"><span>u.v.m.</span></div>
+        </div>
+      </div>
+
+      <!-- Kontakt & Button Card -->
+      <div class="card">
+        <h2>Kontakt</h2>
+        <div class="kontakt-highlight">
+          📞 <strong>Buchungen & Anfragen</strong><br>
+          Tel: <a href="tel:01736571884">0173 65 71 884</a><br>
+          Mail: <a href="mailto:docman94@web.de">docman94@web.de</a>
+        </div>
+        <a class="btn" href="https://www.facebook.com/groups/598163906914708/?locale=de_DE" target="_blank" rel="noopener">
+          🔥 Facebook Gruppe
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Rocksack. <span>Rock never dies.</span>
+    </footer>
+  </div>
+</body>
+</html>
